@@ -47,7 +47,7 @@ def __main__():
                                              args.no_group_labels, args.control, grad, groups=['<25', '>60', '25-60'])
 
         trainer = get_test_trainer(args, model, ['<25', '>60', '25-60'], metric='acc')
-        trainer.fit(data_train, data_valid, 4, checkpoint_folder, checkpoint_every=args.checkpointevery,
+        trainer.fit(data_train, data_valid, 2, checkpoint_folder, checkpoint_every=args.checkpointevery,
                     print_every=args.printevery)
 
         # validation
