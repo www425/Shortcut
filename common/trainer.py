@@ -345,9 +345,6 @@ class FinetuningClassificationTrainer(ClassificationTrainer):
         batch = tuple(t.to(self.device) for t in batch)
         X, y, att_mask, _ = batch
 
-        X = X.squeeze()
-        att_mask = att_mask.squeeze()
-        y = y.squeeze()
         logits = self.model.forward(X, att_mask)  # shape (batch_size, n_labels)
         loss = self.loss_fn(logits, y)
         n_correct = torch.sum(y == logits.argmax(dim=1)).item()
