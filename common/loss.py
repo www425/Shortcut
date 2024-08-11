@@ -36,8 +36,9 @@ class FocalLoss(nn.Module):
         targets = targets.view(-1, 1)
         targets_adv = targets_adv.view(-1, 1)
         pt = self.compute_probs(inputs, targets)
-        pt_scale = (w+0.5)*self.compute_probs_temp(inputs_adv, targets_adv)
-        a = torch.pow((1 - pt_scale), self.gamma)
+        w = 1 / (1 + torch.exp(-10 * w + 5))
+        pt_scale = self.compute_probs_temp(inputs_adv, targets_adv)
+        a = torch.pow(w * (1 - pt_scale), self.gamma)
         batch_loss = -self.alpha * a * torch.log(pt)
 
         if self.size_average:
